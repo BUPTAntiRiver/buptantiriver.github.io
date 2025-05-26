@@ -62,6 +62,12 @@
 
 
 
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -76,6 +82,9 @@
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -96,6 +105,10 @@
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
 
 
 
@@ -130,7 +143,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -148,6 +161,108 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/26/knowledge-distillation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Qianhe Xiao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qianhe's Blog">
+      <meta itemprop="description" content="Computer Science, Machine Learning and all I love.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Qianhe's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/05/26/knowledge-distillation/" class="post-title-link" itemprop="url">Knowledge Distillation Brief Introduction</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-05-26 21:11:12 / Modified: 21:11:53" itemprop="dateCreated datePublished" datetime="2025-05-26T21:11:12+08:00">2025-05-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="What-is-Knowledge-Distillation"><a href="#What-is-Knowledge-Distillation" class="headerlink" title="What is Knowledge Distillation?"></a>What is Knowledge Distillation?</h1><p><strong>Knowledge distillation</strong> is a model compression technique where a large, well-performing model (<strong>teacher</strong>) is used to train a smaller, more efficient model (<strong>student</strong>) by transferring its “knowledge” — not just hard labels, but also soft output distributions.</p>
+<ul>
+<li>The student learns from both:<ul>
+<li>The <strong>true labels</strong> (as in normal supervised learning)</li>
+<li>The <strong>teacher’s soft predictions</strong>, which contain additional structure or “dark knowledge”</li>
+</ul>
+</li>
+</ul>
+<h1 id="Why-use-Knowledge-Distillation"><a href="#Why-use-Knowledge-Distillation" class="headerlink" title="Why use Knowledge Distillation?"></a>Why use Knowledge Distillation?</h1><p>To create <strong>smaller, faster models</strong> that retain <strong>high accuracy</strong> — ideal for deployment on <strong>mobile, embedded, or edge devices (TinyML)</strong>.</p>
+<ul>
+<li>Training a small model directly may result in <strong>lower accuracy</strong>.</li>
+<li>Distillation helps the student learn <strong>not only what is right</strong>, but also <strong>how wrong classes relate to the right one</strong>, improving generalization.<br>Common use cases:</li>
+<li>Deploying BERT → DistilBERT</li>
+<li>Compressing ResNet models for mobile</li>
+<li>Combining ensemble models into one lightweight student</li>
+</ul>
+<h1 id="How-does-Knowledge-Distillation-work"><a href="#How-does-Knowledge-Distillation-work" class="headerlink" title="How does Knowledge Distillation work?"></a>How does Knowledge Distillation work?</h1><h3 id="Step-by-step"><a href="#Step-by-step" class="headerlink" title="Step-by-step:"></a>Step-by-step:</h3><ol>
+<li><strong>Train the teacher model</strong> normally (e.g., a large CNN or transformer).    </li>
+<li><strong>Design a smaller student model</strong> that you want to deploy.  </li>
+<li><strong>Train the student</strong> using a combination of:<ul>
+<li>Standard cross-entropy loss with the true labels</li>
+<li>KL divergence (or cross-entropy) between <strong>SoftMax outputs</strong> of teacher and student (softened using a temperature $T &gt; 1$)</li>
+</ul>
+</li>
+</ol>
+<h3 id="Distillation-loss-formula"><a href="#Distillation-loss-formula" class="headerlink" title="Distillation loss formula:"></a>Distillation loss formula:</h3><p>$$\text{Loss} &#x3D; \alpha \cdot \text{KL}(S_T, T_T) + (1 - \alpha) \cdot \text{CE}(S, y)$$<br>Where:</p>
+<ul>
+<li>$S$, $T$: student and teacher logits</li>
+<li>$T_T$: softened teacher output: $\text{Softmax}(T &#x2F; T)$</li>
+<li>$S_T$: softened student output: $\text{Softmax}(S &#x2F; T)$</li>
+<li>$y$: true label</li>
+<li>$\alpha$: weight between distillation and supervised loss</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

@@ -19,26 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="What is Knowledge Distillation?Knowledge distillation is a model compression technique where a large, well-performing model (teacher) is used to train a smaller, more efficient model (student) by tran">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2025/05/26/hello-world/index.html">
+<meta property="og:title" content="Knowledge Distillation Brief Introduction">
+<meta property="og:url" content="http://example.com/2025/05/26/knowledge-distillation/index.html">
 <meta property="og:site_name" content="Qianhe&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="What is Knowledge Distillation?Knowledge distillation is a model compression technique where a large, well-performing model (teacher) is used to train a smaller, more efficient model (student) by tran">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-05-26T12:58:22.908Z">
-<meta property="article:modified_time" content="2025-05-26T12:58:22.908Z">
+<meta property="article:published_time" content="2025-05-26T13:11:12.540Z">
+<meta property="article:modified_time" content="2025-05-26T13:11:53.188Z">
 <meta property="article:author" content="Qianhe Xiao">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2025/05/26/hello-world/">
+<link rel="canonical" href="http://example.com/2025/05/26/knowledge-distillation/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/05/26/hello-world/","path":"2025/05/26/hello-world/","title":"Hello World"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/05/26/knowledge-distillation/","path":"2025/05/26/knowledge-distillation/","title":"Knowledge Distillation Brief Introduction"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World | Qianhe's Blog</title>
+<title>Knowledge Distillation Brief Introduction | Qianhe's Blog</title>
   
 
 
@@ -66,7 +66,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
@@ -133,7 +133,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-Knowledge-Distillation"><span class="nav-number">1.</span> <span class="nav-text">What is Knowledge Distillation?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-use-Knowledge-Distillation"><span class="nav-number">2.</span> <span class="nav-text">Why use Knowledge Distillation?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-Knowledge-Distillation-work"><span class="nav-number">3.</span> <span class="nav-text">How does Knowledge Distillation work?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-by-step"><span class="nav-number">3.0.1.</span> <span class="nav-text">Step-by-step:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distillation-loss-formula"><span class="nav-number">3.0.2.</span> <span class="nav-text">Distillation loss formula:</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +174,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/26/knowledge-distillation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -187,12 +187,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World | Qianhe's Blog">
+      <meta itemprop="name" content="Knowledge Distillation Brief Introduction | Qianhe's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          Knowledge Distillation Brief Introduction
         </h1>
 
         <div class="post-meta-container">
@@ -202,8 +202,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2025-05-26 20:58:22" itemprop="dateCreated datePublished" datetime="2025-05-26T20:58:22+08:00">2025-05-26</time>
+      <time title="Created: 2025-05-26 21:11:12 / Modified: 21:11:53" itemprop="dateCreated datePublished" datetime="2025-05-26T21:11:12+08:00">2025-05-26</time>
     </span>
 
   
@@ -215,19 +216,39 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="What-is-Knowledge-Distillation"><a href="#What-is-Knowledge-Distillation" class="headerlink" title="What is Knowledge Distillation?"></a>What is Knowledge Distillation?</h1><p><strong>Knowledge distillation</strong> is a model compression technique where a large, well-performing model (<strong>teacher</strong>) is used to train a smaller, more efficient model (<strong>student</strong>) by transferring its “knowledge” — not just hard labels, but also soft output distributions.</p>
+<ul>
+<li>The student learns from both:<ul>
+<li>The <strong>true labels</strong> (as in normal supervised learning)</li>
+<li>The <strong>teacher’s soft predictions</strong>, which contain additional structure or “dark knowledge”</li>
+</ul>
+</li>
+</ul>
+<h1 id="Why-use-Knowledge-Distillation"><a href="#Why-use-Knowledge-Distillation" class="headerlink" title="Why use Knowledge Distillation?"></a>Why use Knowledge Distillation?</h1><p>To create <strong>smaller, faster models</strong> that retain <strong>high accuracy</strong> — ideal for deployment on <strong>mobile, embedded, or edge devices (TinyML)</strong>.</p>
+<ul>
+<li>Training a small model directly may result in <strong>lower accuracy</strong>.</li>
+<li>Distillation helps the student learn <strong>not only what is right</strong>, but also <strong>how wrong classes relate to the right one</strong>, improving generalization.<br>Common use cases:</li>
+<li>Deploying BERT → DistilBERT</li>
+<li>Compressing ResNet models for mobile</li>
+<li>Combining ensemble models into one lightweight student</li>
+</ul>
+<h1 id="How-does-Knowledge-Distillation-work"><a href="#How-does-Knowledge-Distillation-work" class="headerlink" title="How does Knowledge Distillation work?"></a>How does Knowledge Distillation work?</h1><h3 id="Step-by-step"><a href="#Step-by-step" class="headerlink" title="Step-by-step:"></a>Step-by-step:</h3><ol>
+<li><strong>Train the teacher model</strong> normally (e.g., a large CNN or transformer).    </li>
+<li><strong>Design a smaller student model</strong> that you want to deploy.  </li>
+<li><strong>Train the student</strong> using a combination of:<ul>
+<li>Standard cross-entropy loss with the true labels</li>
+<li>KL divergence (or cross-entropy) between <strong>SoftMax outputs</strong> of teacher and student (softened using a temperature $T &gt; 1$)</li>
+</ul>
+</li>
+</ol>
+<h3 id="Distillation-loss-formula"><a href="#Distillation-loss-formula" class="headerlink" title="Distillation loss formula:"></a>Distillation loss formula:</h3><p>$$\text{Loss} &#x3D; \alpha \cdot \text{KL}(S_T, T_T) + (1 - \alpha) \cdot \text{CE}(S, y)$$<br>Where:</p>
+<ul>
+<li>$S$, $T$: student and teacher logits</li>
+<li>$T_T$: softened teacher output: $\text{Softmax}(T &#x2F; T)$</li>
+<li>$S_T$: softened student output: $\text{Softmax}(S &#x2F; T)$</li>
+<li>$y$: true label</li>
+<li>$\alpha$: weight between distillation and supervised loss</li>
+</ul>
 
     </div>
 
@@ -241,11 +262,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2025/05/26/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/05/26/knowledge-distillation/" rel="next" title="Knowledge Distillation Brief Introduction">
-                  Knowledge Distillation Brief Introduction <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
