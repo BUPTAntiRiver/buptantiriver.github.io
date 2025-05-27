@@ -19,26 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"buptantiriver.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="x86-64 StackStack is just a region of memory managed with stack disciplineFirst, we let %rsp be at the bottom of the stack and then subtract a piece of address to it, so that the stack grows toward lo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://buptantiriver.github.io/2025/05/26/hello-world/index.html">
+<meta property="og:title" content="Lecture 07 Machine-Level Programming 3 Procedures">
+<meta property="og:url" content="https://buptantiriver.github.io/2025/05/27/CSAPP-Lecture-07/index.html">
 <meta property="og:site_name" content="Qianhe&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="x86-64 StackStack is just a region of memory managed with stack disciplineFirst, we let %rsp be at the bottom of the stack and then subtract a piece of address to it, so that the stack grows toward lo">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-05-26T12:58:22.908Z">
-<meta property="article:modified_time" content="2025-05-26T12:58:22.908Z">
+<meta property="article:published_time" content="2025-05-27T13:16:03.000Z">
+<meta property="article:modified_time" content="2025-05-27T13:18:56.470Z">
 <meta property="article:author" content="Qianhe Xiao">
+<meta property="article:tag" content="Computer Systems">
+<meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://buptantiriver.github.io/2025/05/26/hello-world/">
+<link rel="canonical" href="https://buptantiriver.github.io/2025/05/27/CSAPP-Lecture-07/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://buptantiriver.github.io/2025/05/26/hello-world/","path":"2025/05/26/hello-world/","title":"Hello World"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://buptantiriver.github.io/2025/05/27/CSAPP-Lecture-07/","path":"2025/05/27/CSAPP-Lecture-07/","title":"Lecture 07 Machine-Level Programming 3 Procedures"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World | Qianhe's Blog</title>
+<title>Lecture 07 Machine-Level Programming 3 Procedures | Qianhe's Blog</title>
   
 
 
@@ -134,7 +136,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#x86-64-Stack"><span class="nav-number">1.</span> <span class="nav-text">x86-64 Stack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Push"><span class="nav-number">2.</span> <span class="nav-text">Push</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pop"><span class="nav-number">3.</span> <span class="nav-text">Pop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Procedure-Control-Flow"><span class="nav-number">4.</span> <span class="nav-text">Procedure Control Flow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Procedure-Data-Flow"><span class="nav-number">5.</span> <span class="nav-text">Procedure Data Flow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stack-Based-Language"><span class="nav-number">6.</span> <span class="nav-text">Stack-Based Language</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stack-Frames-%E5%B8%A7%E6%A0%88"><span class="nav-number">7.</span> <span class="nav-text">Stack Frames 帧栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Register-Saving-Conventions"><span class="nav-number">8.</span> <span class="nav-text">Register Saving Conventions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conventions"><span class="nav-number">8.1.</span> <span class="nav-text">Conventions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Recursion-%E9%80%92%E5%BD%92"><span class="nav-number">9.</span> <span class="nav-text">Recursion 递归</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -180,7 +182,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://buptantiriver.github.io/2025/05/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://buptantiriver.github.io/2025/05/27/CSAPP-Lecture-07/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -193,12 +195,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World | Qianhe's Blog">
+      <meta itemprop="name" content="Lecture 07 Machine-Level Programming 3 Procedures | Qianhe's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          Lecture 07 Machine-Level Programming 3 Procedures
         </h1>
 
         <div class="post-meta-container">
@@ -208,8 +210,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2025-05-26 20:58:22" itemprop="dateCreated datePublished" datetime="2025-05-26T20:58:22+08:00">2025-05-26</time>
+      <time title="Created: 2025-05-27 21:16:03 / Modified: 21:18:56" itemprop="dateCreated datePublished" datetime="2025-05-27T21:16:03+08:00">2025-05-27</time>
     </span>
 
   
@@ -221,19 +224,47 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="x86-64-Stack"><a href="#x86-64-Stack" class="headerlink" title="x86-64 Stack"></a>x86-64 Stack</h1><p>Stack is just a <strong>region of memory</strong> managed with stack discipline<br>First, we let <code>%rsp</code> be at the bottom of the stack and then subtract a piece of address to it, so that the stack grows toward <strong>lower</strong> addresses. The <strong>top</strong> of stack has <strong>lowest</strong> address, and <code>%rsp</code> points to the top, while the <strong>bottom</strong> of stack has <strong>highest</strong> address.</p>
+<h1 id="Push"><a href="#Push" class="headerlink" title="Push"></a>Push</h1><p><code>pushq Src</code></p>
+<ul>
+<li>Fetch operand at <code>Src</code></li>
+<li>Decrement <code>%rsp</code> by 8</li>
+<li>Write operand at address given by <code>%rsp</code></li>
+</ul>
+<h1 id="Pop"><a href="#Pop" class="headerlink" title="Pop"></a>Pop</h1><p><code>popq Dest</code></p>
+<ul>
+<li>Read value at address given by <code>rsp%</code></li>
+<li>Increment <code>rsp%</code> by 8</li>
+<li>Store value at <code>Dest</code> (must be register)</li>
+</ul>
+<h1 id="Procedure-Control-Flow"><a href="#Procedure-Control-Flow" class="headerlink" title="Procedure Control Flow"></a>Procedure Control Flow</h1><p>Use stack to support procedure call and return<br><strong>Procedure call</strong>: <code>call label</code></p>
+<ul>
+<li>Push return address to stack</li>
+<li>Jump to label<br>Return address:</li>
+<li>Address of the next instruction right after the <code>call</code><br><strong>Procedure return</strong>:</li>
+<li>Pop address from stack</li>
+<li>Jump to address</li>
+</ul>
+<h1 id="Procedure-Data-Flow"><a href="#Procedure-Data-Flow" class="headerlink" title="Procedure Data Flow"></a>Procedure Data Flow</h1><p>The arguments of a function call are stored in registers: <code>%rdi, %rsi, %rcx, %rdx, %r8, %r9</code><br>The return value stores in <code>%rax</code><br>If there are more than 6 arguments, the others are stored in stack.</p>
+<h1 id="Stack-Based-Language"><a href="#Stack-Based-Language" class="headerlink" title="Stack-Based Language"></a>Stack-Based Language</h1><p><strong>Only one</strong> function can be running at the same time, so we can allocate as many resources as you want using stack during execution.</p>
+<h1 id="Stack-Frames-帧栈"><a href="#Stack-Frames-帧栈" class="headerlink" title="Stack Frames 帧栈"></a>Stack Frames 帧栈</h1><p>当 <code>call</code> 一个函数时，将 <code>%rbp</code> 设置为该函数调用的起点 base pointer 然后移动 <code>%rsp</code> 分配栈空间。当函数调用结束时，将 <code>%rsp</code> 移回 <code>%rbp</code> 释放栈空间。</p>
+<h1 id="Register-Saving-Conventions"><a href="#Register-Saving-Conventions" class="headerlink" title="Register Saving Conventions"></a>Register Saving Conventions</h1><p>When procedure <code>yoo</code> calls <code>who</code></p>
+<ul>
+<li><code>yoo</code> is the <strong>caller</strong></li>
+<li><code>who</code> is the <strong>callee</strong><br>The callee might modify the values in caller, how to avoid this?</li>
+</ul>
+<h2 id="Conventions"><a href="#Conventions" class="headerlink" title="Conventions"></a>Conventions</h2><ul>
+<li><strong>“Caller Saved”</strong><ul>
+<li>Caller saves temporary values in its frame before the call</li>
+</ul>
+</li>
+<li><strong>“Callee Saved”</strong><ul>
+<li>Callee saves temporary values in its frame before using</li>
+<li>Restores them before returning to caller</li>
+</ul>
+</li>
+</ul>
+<h1 id="Recursion-递归"><a href="#Recursion-递归" class="headerlink" title="Recursion 递归"></a>Recursion 递归</h1><p>C 编译器处理递归和处理常规函数没有任何区别，得益于它的<strong>栈</strong>结构</p>
 
     </div>
 
@@ -242,16 +273,20 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Systems/" rel="tag"># Computer Systems</a>
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2025/05/27/CSAPP-Notes/" rel="prev" title="CSAPP Notes">
+                  <i class="fa fa-angle-left"></i> CSAPP Notes
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/05/26/knowledge-distillation/" rel="next" title="Knowledge Distillation Brief Introduction">
-                  Knowledge Distillation Brief Introduction <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
