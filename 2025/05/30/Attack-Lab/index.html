@@ -19,18 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"buptantiriver.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="一些回顾x86-64 寄存器约定  参数传递： %rdi, %rsi, %rdx, %rcx, %r8, %r9 返回值： %rax Callee-saved 被调用侧存储： %rbx, %r12, %r13, %r14, %rbp, %rsp Caller-saved 调用侧存储： %rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r11 Stack">
+    <meta name="description" content="一些回顾 x86-64 寄存器约定  参数传递： %rdi, %rsi, %rdx, %rcx, %r8, %r9 返回值： %rax Callee-saved 被调用侧存储： %rbx, %r12, %r13, %r14, %rbp, %rsp Caller-saved 调用侧存储： %rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Attack Lab">
 <meta property="og:url" content="https://buptantiriver.github.io/2025/05/30/Attack-Lab/index.html">
 <meta property="og:site_name" content="Qianhe&#39;s Blog">
-<meta property="og:description" content="一些回顾x86-64 寄存器约定  参数传递： %rdi, %rsi, %rdx, %rcx, %r8, %r9 返回值： %rax Callee-saved 被调用侧存储： %rbx, %r12, %r13, %r14, %rbp, %rsp Caller-saved 调用侧存储： %rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r11 Stack">
+<meta property="og:description" content="一些回顾 x86-64 寄存器约定  参数传递： %rdi, %rsi, %rdx, %rcx, %r8, %r9 返回值： %rax Callee-saved 被调用侧存储： %rbx, %r12, %r13, %r14, %rbp, %rsp Caller-saved 调用侧存储： %rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-05-30T10:12:42.000Z">
 <meta property="article:modified_time" content="2025-05-30T10:13:18.168Z">
 <meta property="article:author" content="Qianhe Xiao">
-<meta property="article:tag" content="CSAPP">
 <meta property="article:tag" content="Computer Systems">
+<meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary">
 
 
@@ -64,12 +64,6 @@
   
 
 
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
 
@@ -136,7 +130,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">一些回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attack-Lab-%E6%80%BB%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">Attack Lab 总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Phases-1-3"><span class="nav-number">2.1.</span> <span class="nav-text">Phases 1-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phases-4-5"><span class="nav-number">2.2.</span> <span class="nav-text">Phases 4-5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%81%9A%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">开始做！</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-1"><span class="nav-number">3.1.</span> <span class="nav-text">Phase 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-2"><span class="nav-number">3.2.</span> <span class="nav-text">Phase 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-3"><span class="nav-number">3.3.</span> <span class="nav-text">Phase 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-4"><span class="nav-number">3.4.</span> <span class="nav-text">Phase 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phase-5"><span class="nav-number">3.5.</span> <span class="nav-text">Phase 5</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">一些回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attack-lab-%E6%80%BB%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">Attack Lab 总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#phases-1-3"><span class="nav-number">2.1.</span> <span class="nav-text">Phases 1-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phases-4-5"><span class="nav-number">2.2.</span> <span class="nav-text">Phases 4-5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%81%9A"><span class="nav-number">3.</span> <span class="nav-text">开始做！</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-1"><span class="nav-number">3.1.</span> <span class="nav-text">Phase 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-2"><span class="nav-number">3.2.</span> <span class="nav-text">Phase 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-3"><span class="nav-number">3.3.</span> <span class="nav-text">Phase 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-4"><span class="nav-number">3.4.</span> <span class="nav-text">Phase 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-5"><span class="nav-number">3.5.</span> <span class="nav-text">Phase 5</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -149,13 +143,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -224,25 +218,36 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="一些回顾"><a href="#一些回顾" class="headerlink" title="一些回顾"></a>一些回顾</h1><p><strong>x86-64 寄存器约定</strong></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="一些回顾">一些回顾</h1>
+<p><strong>x86-64 寄存器约定</strong></p>
 <ul>
 <li>参数传递： <code>%rdi, %rsi, %rdx, %rcx, %r8, %r9</code></li>
 <li>返回值： <code>%rax</code></li>
-<li>Callee-saved 被调用侧存储： <code>%rbx, %r12, %r13, %r14, %rbp, %rsp</code></li>
-<li>Caller-saved 调用侧存储： <code>%rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r11</code></li>
+<li>Callee-saved 被调用侧存储：
+<code>%rbx, %r12, %r13, %r14, %rbp, %rsp</code></li>
+<li>Caller-saved 调用侧存储：
+<code>%rdi, %rsi, %rdx, %rcx, %r8, %r9, %rax, %r10, %r11</code></li>
 <li>Stack pointer 栈指针： <code>%rsp</code></li>
 <li>Instruction pointer 指令指针： <code>%rip</code></li>
 </ul>
 <p><strong>x86-64 Stack 栈</strong></p>
-<p>栈朝着<strong>更低</strong>的内存地址方向<strong>向下</strong>增长。<br><code>%rsp</code> 指向栈的<strong>顶部</strong>，地址最小处。<br><code>push %reg</code> 使 <code>%rsp</code> 减去 8，然后将 <code>%reg</code> 中的值存储在 <code>(%rsp)</code>。<br><code>pop %reg</code> 将 <code>(%rsp)</code> 中的值存至 <code>%reg</code>，然后使 <code>%rsp</code> 增加 8。</p>
+<p>栈朝着<strong>更低</strong>的内存地址方向<strong>向下</strong>增长。
+<code>%rsp</code> 指向栈的<strong>顶部</strong>，地址最小处。
+<code>push %reg</code> 使 <code>%rsp</code> 减去 8，然后将
+<code>%reg</code> 中的值存储在 <code>(%rsp)</code>。
+<code>pop %reg</code> 将 <code>(%rsp)</code> 中的值存至
+<code>%reg</code>，然后使 <code>%rsp</code> 增加 8。</p>
 <p><strong>x86-64 Stack Frames 帧栈</strong></p>
-<p>每一个函数调用都有它自己的<strong>帧栈</strong>。<br>可以把帧看作每个函数的工作空间：</p>
+<p>每一个函数调用都有它自己的<strong>帧栈</strong>。
+可以把帧看作每个函数的工作空间：</p>
 <ul>
 <li>局部变量</li>
 <li>Callee 和 Caller-saved 寄存器</li>
 <li>函数调用的可选参数</li>
 </ul>
-<h1 id="Attack-Lab-总览"><a href="#Attack-Lab-总览" class="headerlink" title="Attack Lab 总览"></a>Attack Lab 总览</h1><h2 id="Phases-1-3"><a href="#Phases-1-3" class="headerlink" title="Phases 1-3"></a>Phases 1-3</h2><p><strong>Overview</strong></p>
+<h1 id="attack-lab-总览">Attack Lab 总览</h1>
+<h2 id="phases-1-3">Phases 1-3</h2>
+<p><strong>Overview</strong></p>
 <ul>
 <li>Exploit x86-64 by overwriting the stack</li>
 <li>Overflow a buffer, overwrite return address</li>
@@ -253,31 +258,107 @@
 <li>使用 <code>objdump -d</code> 来确定相应的偏移量</li>
 <li>使用 <code>gdb</code> 来确定栈地址</li>
 </ul>
-<h2 id="Phases-4-5"><a href="#Phases-4-5" class="headerlink" title="Phases 4-5"></a>Phases 4-5</h2><p><strong>Overview</strong></p>
+<h2 id="phases-4-5">Phases 4-5</h2>
+<p><strong>Overview</strong></p>
 <ul>
 <li>利用面向返回编程来执行任意代码</li>
-<li>通过在一小段代码末尾添加 <code>c3</code> 代表 <code>ret</code> 来实现注入代码</li>
+<li>通过在一小段代码末尾添加 <code>c3</code> 代表 <code>ret</code>
+来实现注入代码</li>
 </ul>
 <p><strong>建议</strong></p>
 <ul>
-<li>使用 <code>pop</code> 和 <code>mov</code> 指令以及常量来实现各种功能</li>
+<li>使用 <code>pop</code> 和 <code>mov</code>
+指令以及常量来实现各种功能</li>
 </ul>
-<h1 id="开始做！"><a href="#开始做！" class="headerlink" title="开始做！"></a>开始做！</h1><p>做之前我们先把 write up 文档看一遍。<br>因为我们没有使用 shark machine 所以在<code>run</code>的时候需要使用<code>run -q</code></p>
-<h2 id="Phase-1"><a href="#Phase-1" class="headerlink" title="Phase 1"></a>Phase 1</h2><p>在阶段 1 中我们不需要注入新的代码，只需要覆盖返回地址从而运行我们想要执行的代码 <code>touch1</code> 即可。已知我们 <code>getbuf</code> 函数接受一段字符串，我们只需要输入一个足够长的字符串直到溢出，然后将溢出的部分设置为我们想要跳转到的地址。这是由 <code>ret</code> 工作的原理决定的。<code>ret</code> 弹出栈顶元素作为下一个执行代码的地址。<br>那么问题就很清楚了，我们需要处理两件事：</p>
-<ol>
-<li><code>getbuf</code> 栈长度有多长？我们输入多长的字符串能够溢出。<br>我们在 <code>getbuf</code> 设置断点然后 <code>disas</code> 就能发现分配长度。</li>
-<li>我们需要跳转的地址是什么？<br>跳转的地址通过查看 <code>objdump</code> 得到结果中 <code>touch1</code> 相应地址即可。</li>
+<h1 id="开始做">开始做！</h1>
+<p>做之前我们先把 write up 文档看一遍。 因为我们没有使用 shark machine
+所以在<code>run</code>的时候需要使用<code>run -q</code></p>
+<h2 id="phase-1">Phase 1</h2>
+<p>在阶段 1
+中我们不需要注入新的代码，只需要覆盖返回地址从而运行我们想要执行的代码
+<code>touch1</code> 即可。已知我们 <code>getbuf</code>
+函数接受一段字符串，我们只需要输入一个足够长的字符串直到溢出，然后将溢出的部分设置为我们想要跳转到的地址。这是由
+<code>ret</code> 工作的原理决定的。<code>ret</code>
+弹出栈顶元素作为下一个执行代码的地址。
+那么问题就很清楚了，我们需要处理两件事：</p>
+<ol type="1">
+<li><code>getbuf</code> 栈长度有多长？我们输入多长的字符串能够溢出。
+我们在 <code>getbuf</code> 设置断点然后 <code>disas</code>
+就能发现分配长度。</li>
+<li>我们需要跳转的地址是什么？ 跳转的地址通过查看 <code>objdump</code>
+得到结果中 <code>touch1</code> 相应地址即可。</li>
 </ol>
 <p>最后编辑好我们的输入字符串，一大堆意义不明的字符再加上我们的地址即可。</p>
-<h2 id="Phase-2"><a href="#Phase-2" class="headerlink" title="Phase 2"></a>Phase 2</h2><p>阶段 2 相比 1 多了一步，需要我们给函数传递参数，这就需要我们执行额外的代码来修改存储变量的寄存器，同时在运行完这段代码后还要重新跳转回 <code>touch2</code> 那么我们就遇到了两个新问题：</p>
-<ol>
-<li>怎么添加额外的代码呢？<br>还记得我们输入的一大堆意义不明的符号的字符串么？现在我们要赋予它们意义了！我们先手动编写修改寄存器值的代码 <code>movq &lt;Cookie&gt;, %rdi</code> 然后对其进行编译，再将得到的十六进制代码移动到我们的字符串中，就大功告成了！但问题是，我们原来溢出后跳转的位置是 <code>touch1</code> 现在我们要把他改成我们这段代码的位置，可以通过观察 <code>rsp</code> 的值来计算。</li>
-<li>怎么执行完代码再跳转到 <code>touch2</code>呢？<br>还记得 <code>ret</code> 的原理吗？弹出栈顶值，作为地址进行跳转，我们只需要再 <code>push</code> 一下 <code>torch2</code> 的地址再 <code>ret</code> 即可。</li>
+<h2 id="phase-2">Phase 2</h2>
+<p>阶段 2 相比 1
+多了一步，需要我们给函数传递参数，这就需要我们执行额外的代码来修改存储变量的寄存器，同时在运行完这段代码后还要重新跳转回
+<code>touch2</code> 那么我们就遇到了两个新问题：</p>
+<ol type="1">
+<li>怎么添加额外的代码呢？
+还记得我们输入的一大堆意义不明的符号的字符串么？现在我们要赋予它们意义了！我们先手动编写修改寄存器值的代码
+<code>movq &lt;Cookie&gt;, %rdi</code>
+然后对其进行编译，再将得到的十六进制代码移动到我们的字符串中，就大功告成了！但问题是，我们原来溢出后跳转的位置是
+<code>touch1</code> 现在我们要把他改成我们这段代码的位置，可以通过观察
+<code>rsp</code> 的值来计算。</li>
+<li>怎么执行完代码再跳转到 <code>touch2</code>呢？ 还记得
+<code>ret</code> 的原理吗？弹出栈顶值，作为地址进行跳转，我们只需要再
+<code>push</code> 一下 <code>torch2</code> 的地址再 <code>ret</code>
+即可。</li>
 </ol>
 <p>将上述修改结合起来，我们就完成阶段 2 了。</p>
-<h2 id="Phase-3"><a href="#Phase-3" class="headerlink" title="Phase 3"></a>Phase 3</h2><p>阶段 3 更加复杂一点，我们需要把一个指针作为变量进行传递，这看起来很简单，但它其实隐含着另一项任务：维护我们指针所指向的目标，在此处为一个字符串。我们要在什么地方存储这个字符串呢？我们所能掌握的内存区域，也就是输入字符串时的这段栈区域了，此外它还不能被其他代码所干扰，因此我们需要在 <code>touch3</code> 中的 <code>hexmatch</code> 前后添加断点，观察执行该函数前后对栈区域的破坏，从中找到一段安全的区域然后将字符串存储在这里。其余的操作细节与前面的阶段相同。<br>在检查栈区域变化时，可以用：<code>x/80x &lt;stack address&gt;</code> 来进行观察。</p>
-<h2 id="Phase-4"><a href="#Phase-4" class="headerlink" title="Phase 4"></a>Phase 4</h2><p>为了复刻阶段 2 的任务，我们需要先将 Cookie 的值存到寄存器 <code>rdi</code> 里，然后再跳转到 <code>touch2</code> 的位置。<br>为了方便，我们先获取 <code>farm.c</code> 的字节文件，可以让 ai 对得到的文件进一步清理，只留下字节代码同时让他们处在同一行。<br>存 Cookie 需要 <code>popq</code> 如果能直接存到 <code>rdi</code> 最好了，我们先看看能否做到，正则匹配 <code>5f c3</code> 发现没有，那就只能再试试别的寄存器，后面再传给 <code>rdi</code>，正则匹配 <code>5[89a-f] (90 )+c3</code> 发现两个！都是存到 <code>rax</code> 那接下来就找找 <code>movq %rax, %rdi</code> 正则匹配 <code>48 89 c7 c3</code> 也有！那我们就成功做到把 Cookie 存在 <code>rdi</code> 里面了，跳转 <code>touch2</code> 只需要我们多写一点地址就行，开始组装！<br>注意每次读取都是读取 8 个字节，所以我们给每个地址和数据都要补上足够的 0 防止 Segment Error.</p>
-<h2 id="Phase-5"><a href="#Phase-5" class="headerlink" title="Phase 5"></a>Phase 5</h2><p>现在来到阶段 5！最后的难题！我们还是一步一步做，我们在阶段 3 需要做些啥来着？<br>先输入字节溢出，然后开始执行 ROP，我们需要获取 <code>rsp</code> 现在每次 <code>rsp</code> 都是不同的，所以我们需要获取 <code>rsp</code> 到我们溢出数组的偏移量 Offset，这是可以手动计算的，放在那里后面我们 <code>popq</code> 出来。<br>偏移量的计算方法就是，运行到 <code>pop</code> 偏移量这行指令时，与我们存储 Cookie 的地址之间的距离就是偏移量了。<br>然后我们需要将 <code>rsp</code> 与 Offset 相加，再将得到的值移动至 <code>rdi</code> 大功告成！<br>第一步先找到 <code>movq %rsp &lt;any reg&gt;</code> 的代码，正则匹配 <code>48 89 e[0-7] c3</code> 成功找到。<br>接下来我们找 <code>popq &lt;reg&gt;</code> 的代码，来获取我们的偏移量，正则匹配 <code>5[8-f] (90 )+c3</code>，结果发现只找到 <code>pop</code> 到 <code>rax</code> 的，与我们第一步找的重复了，所以我们还需要为了第一步再找一个 <code>movq</code> 来转移一下 <code>rsp</code> 的值。正则匹配 <code>48 89 c[0-7] c3</code> 找到了 <code>movq %rax, %rdi</code> 这下问题解决。<br>再接下来我们需要实现 <code>rsp</code> 和偏移量的相加，目前它们分别存储在 <code>rdi</code> 和 <code>rax</code> 中，现在问题来了，我们怎么计算加法呢？介绍的指令当中明明没有 <code>add</code> 呀！但是！我们发现 <code>farm.c</code> 里面存在加法！我们只需要调用这个函数就可以计算加法了！但是参数传递这一块，我们需要数据存储在 <code>rdi</code> 和 <code>rsi</code> 中，所以我们需要把 <code>rax</code> 中的偏移量转移到 <code>rsi</code> 中。我们发现没有直接的转移方法，于是寻找用其他寄存器作为中转的方法。<br>最终找到了一条曲折的路，<code>movl %eax, %edx</code>，<code>movl %edx, %ecx</code>，<code>movl %ecx, %esi</code> 总算移到了 <code>rsi</code> 中。然后就是调用函数 <code>add_xy</code> 现在最终的地址就存储在 <code>rax</code> 里面！再把它转移到 <code>rdi</code> 中即可！！一共 8 步和答案数量相同！开始组装！！<br>大功告成！</p>
+<h2 id="phase-3">Phase 3</h2>
+<p>阶段 3
+更加复杂一点，我们需要把一个指针作为变量进行传递，这看起来很简单，但它其实隐含着另一项任务：维护我们指针所指向的目标，在此处为一个字符串。我们要在什么地方存储这个字符串呢？我们所能掌握的内存区域，也就是输入字符串时的这段栈区域了，此外它还不能被其他代码所干扰，因此我们需要在
+<code>touch3</code> 中的 <code>hexmatch</code>
+前后添加断点，观察执行该函数前后对栈区域的破坏，从中找到一段安全的区域然后将字符串存储在这里。其余的操作细节与前面的阶段相同。
+在检查栈区域变化时，可以用：<code>x/80x &lt;stack address&gt;</code>
+来进行观察。</p>
+<h2 id="phase-4">Phase 4</h2>
+<p>为了复刻阶段 2 的任务，我们需要先将 Cookie 的值存到寄存器
+<code>rdi</code> 里，然后再跳转到 <code>touch2</code> 的位置。
+为了方便，我们先获取 <code>farm.c</code> 的字节文件，可以让 ai
+对得到的文件进一步清理，只留下字节代码同时让他们处在同一行。 存 Cookie
+需要 <code>popq</code> 如果能直接存到 <code>rdi</code>
+最好了，我们先看看能否做到，正则匹配 <code>5f c3</code>
+发现没有，那就只能再试试别的寄存器，后面再传给
+<code>rdi</code>，正则匹配 <code>5[89a-f] (90 )+c3</code>
+发现两个！都是存到 <code>rax</code> 那接下来就找找
+<code>movq %rax, %rdi</code> 正则匹配 <code>48 89 c7 c3</code>
+也有！那我们就成功做到把 Cookie 存在 <code>rdi</code> 里面了，跳转
+<code>touch2</code> 只需要我们多写一点地址就行，开始组装！
+注意每次读取都是读取 8 个字节，所以我们给每个地址和数据都要补上足够的 0
+防止 Segment Error.</p>
+<h2 id="phase-5">Phase 5</h2>
+<p>现在来到阶段 5！最后的难题！我们还是一步一步做，我们在阶段 3
+需要做些啥来着？ 先输入字节溢出，然后开始执行 ROP，我们需要获取
+<code>rsp</code> 现在每次 <code>rsp</code> 都是不同的，所以我们需要获取
+<code>rsp</code> 到我们溢出数组的偏移量
+Offset，这是可以手动计算的，放在那里后面我们 <code>popq</code> 出来。
+偏移量的计算方法就是，运行到 <code>pop</code>
+偏移量这行指令时，与我们存储 Cookie 的地址之间的距离就是偏移量了。
+然后我们需要将 <code>rsp</code> 与 Offset 相加，再将得到的值移动至
+<code>rdi</code> 大功告成！ 第一步先找到
+<code>movq %rsp &lt;any reg&gt;</code> 的代码，正则匹配
+<code>48 89 e[0-7] c3</code> 成功找到。 接下来我们找
+<code>popq &lt;reg&gt;</code> 的代码，来获取我们的偏移量，正则匹配
+<code>5[8-f] (90 )+c3</code>，结果发现只找到 <code>pop</code> 到
+<code>rax</code>
+的，与我们第一步找的重复了，所以我们还需要为了第一步再找一个
+<code>movq</code> 来转移一下 <code>rsp</code> 的值。正则匹配
+<code>48 89 c[0-7] c3</code> 找到了 <code>movq %rax, %rdi</code>
+这下问题解决。 再接下来我们需要实现 <code>rsp</code>
+和偏移量的相加，目前它们分别存储在 <code>rdi</code> 和 <code>rax</code>
+中，现在问题来了，我们怎么计算加法呢？介绍的指令当中明明没有
+<code>add</code> 呀！但是！我们发现 <code>farm.c</code>
+里面存在加法！我们只需要调用这个函数就可以计算加法了！但是参数传递这一块，我们需要数据存储在
+<code>rdi</code> 和 <code>rsi</code> 中，所以我们需要把 <code>rax</code>
+中的偏移量转移到 <code>rsi</code>
+中。我们发现没有直接的转移方法，于是寻找用其他寄存器作为中转的方法。
+最终找到了一条曲折的路，<code>movl %eax, %edx</code>，<code>movl %edx, %ecx</code>，<code>movl %ecx, %esi</code>
+总算移到了 <code>rsi</code> 中。然后就是调用函数 <code>add_xy</code>
+现在最终的地址就存储在 <code>rax</code> 里面！再把它转移到
+<code>rdi</code> 中即可！！一共 8 步和答案数量相同！开始组装！！
+大功告成！</p>
 
     </div>
 
@@ -287,8 +368,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
               <a href="/tags/Computer-Systems/" rel="tag"># Computer Systems</a>
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
           </div>
 
         
@@ -300,6 +381,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/06/03/%E7%BB%88%E6%9E%81PRML/" rel="next" title="终极PRML">
+                  终极PRML <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
