@@ -28,7 +28,7 @@ CET4: 596 | CET6: 635
 - MIT 6.S184 Flow Matching and Diffusion Models Introduction, [notes](https://buptantiriver.github.io/Machine-Learning/MIT-6.S184/)
 - MIT 6.S978 Deep Generative Models
 - CS224n NLP Introduction
-- MIT TinyML: modern techniques on large models
+- MIT TinyML: modern techniques on large models, distributed training, distillation, pruning, quantization
 
 ### Computer Science
 
