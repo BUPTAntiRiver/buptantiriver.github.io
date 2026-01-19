@@ -61,11 +61,17 @@ $$
 when the optimizer is Adam. (SGD case is similar)
 Such re-scaling derives from pure math. We have $y=AWx$, after re-scaling, we initialize $\tilde{W}=\frac{W}{\theta}$, so we multiply $A$ by $\theta$, then the variance and result stays the same, the **forward pass is unchanged**.
 For backward pass, let
+
 $$g= \frac{\partial L}{\partial W}$$
+
 by chain rule
+
 $$g=A \frac{\partial L}{\partial y}x^{\top}$$
+
 after re-scaling
+
 $$\tilde{g}= \frac{\partial L}{\partial \tilde{W}}=g\cdot\theta$$
+
 In Adam update:
 
 $$
