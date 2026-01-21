@@ -56,6 +56,18 @@ $$
 Y=\text{SiLU}(\text{Conv1D}(\text{RMSNorm}(\tilde{\mathbf{V}})))+\tilde{\mathbf{V}}
 $$
 
-Then Engram is integrated into the backbone via a residual connection: $\mathbf{H}^{(l)}=\mathbf{H}^{(l)}+\mathbf{Y}$, then followed by standard Attention and MoE. Engram is not applied to every layer; its specific placement is governed by the system-level latency constraints detailed in later sections.
+Then Engram is integrated into the _backbone_ via a residual connection: $\mathbf{H}^{(l)}=\mathbf{H}^{(l)}+\mathbf{Y}$, then followed by standard Attention and MoE. Engram is not applied to every layer; its specific placement is governed by the system-level latency constraints detailed in later sections.
 
 ## Integration with Multi-branch Architecture
+
+We adopt the advanced multi-branch architecture as our default _backbone_. A defining characteristic of this architecture is the expansion of the residual stream into $M$ parallel branches, where information flow is modulated by learnable connection weights.
+
+We implement a parameter-sharing strategy: a single sparse embedding table and a Value projection matrix $\mathbf{W}_{V}$ are shared across all $M$ branches, whereas $M$ distinct Key projection matrices $\{\mathbf{W}_{k}^{(m)}\}^{M}_{m=1}$ are employed to enable branch specific gating behaviors. The gate signal is identity to Engram gating:
+
+$$
+\alpha_{t}^{(m)}=\sigma\left(  \frac{\text{RMSNorm}(\mathbf{h}_{t}^{(m)})^{\top}\text{RMSNorm}(\mathbf{W}_{K}^{(m)}\mathbf{e}_{t})}{\sqrt{ d }}  \right)
+$$
+
+The retrieved memory is then modulated by these independent gates applied to the shared value vector: $\mathbf{u}^{(m)}_{t}=\alpha_{t}^{(m)}\cdot(\mathbf{W}_{V}\mathbf{e}_{t})$. Unless otherwise stated, all experiments utilize this integration with [[Manifold-Constrained Hyper-Connections]] ($M=4$).
+
+## System Efficiency: Decoupling Computed and Memory
