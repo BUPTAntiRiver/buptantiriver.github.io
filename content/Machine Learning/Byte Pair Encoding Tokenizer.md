@@ -1,7 +1,7 @@
 Tokenization takes an important part in large language models. A lot of problems come from it, but we cannot avoid it.
 Tokenization is about how to transform the words or sequences that is understandable to human into a form that is easier to be perceived by machine.
 An simple way is we set an index for every character, that would be easy if only for English, but when considering other languages like Chinese, the vocabulary will become super large.
-The modern method is usually byte level tokenization. We only need 256 index for all representation, actually, index is just the value itself. But the problem is this will make *sequence very long*, the original sequence with length 1000 may become 1500. And in transformer complexity grows quadratically with sequence length.
+The modern method is usually byte level tokenization. We only need 256 index for all representation, actually, index is just the value itself. But the problem is this will make _sequence very long_, the original sequence with length 1000 may become 1500. And in transformer complexity grows quadratically with sequence length.
 So we use byte pair encoding tokenizer.
 
 ## What is new?
@@ -18,7 +18,7 @@ We can break the text into coarse tokens first like word-level, and track their 
 
 ### Special tokens
 
-There are pre-defined special tokens like `end-of-text` or `start-of-text`  to provide extra information. They are also raw bytes! But we should now train the tokenizer on them. So that when doing pre-tokenization, instead of building a separating pattern, we also need to protect the special tokens and neglect them when building the count table.
+There are pre-defined special tokens like `end-of-text` or `start-of-text` to provide extra information. They are also raw bytes! But we should now train the tokenizer on them. So that when doing pre-tokenization, instead of building a separating pattern, we also need to protect the special tokens and neglect them when building the count table.
 
 ### Merging
 
@@ -33,11 +33,13 @@ The biggest bottleneck of bpe training is the pre-tokenization. And luckily, it 
 ### Encoding
 
 The encoding of process of BPE mirrors how we train the BPE vocabulary. The major steps are:
+
 1. **Pre-tokenize**. We also pre-tokenize the sequence and encode each pre-token as a sequence of UTF-8 bytes, then we will merge these bytes within each pre-token into vocabulary elements.
-2. **Apply the merges**. Take the sequence of vocabulary element merges created during BPE training, then apply it to our pre-tokens *in the same order of creation*.
+2. **Apply the merges**. Take the sequence of vocabulary element merges created during BPE training, then apply it to our pre-tokens _in the same order of creation_.
 
 Also we should handle user-defined specially tokens properly during encoding. Memory constraints is also important, when dealing with large files we can chunk it, but should make sure no tokens crosses chunk boundaries.
 Encoding is just like merging, which is time consuming. So we may apply some optimizations:
+
 1. **Cache**. Some words are very common in text like: the, a. We can cache the most common 1000 words, then in most of the time the tokenizer hits the cache.
 2. **Rank-based Lookups**: instead of checking the merges one by one, we can build a dict that maps merge to its priority rank, so that we can just scan through the word to know which merge should be applied.
 
