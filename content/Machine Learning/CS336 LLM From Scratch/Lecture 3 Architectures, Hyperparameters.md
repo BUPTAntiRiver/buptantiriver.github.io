@@ -1,6 +1,6 @@
 ## Architectures
 
-### RMSNorm
+### [[RMSNorm]]
 
 Let's look at the popular RMSNorm, it simply removed the bias term and mean term comparing to layer norm but it keeps the same performance. It reduced some FLOPs but the key part is it reduced memory usage of bias and mean.
 This is because though FLOPs of normalization takes only a tiny part of total FLOPs, with less than 1%, but the run time we need for normalization can take 25%. A lot of memory transfer lead to such result.

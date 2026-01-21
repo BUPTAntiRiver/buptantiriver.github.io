@@ -15,7 +15,7 @@ The starting point is Transformer, but since 2017, we have done a lot of things 
 
 - Activation functions: ReLU to SwiGLU
 - Positional encoding: sinusoidal to [[RoPE]]
-- Normalization: LayerNorm to RMSNorm
+- Normalization: LayerNorm to [[RMSNorm]]
 - Placement of normalization: pre-norm versus post-norm
 - MLP: dense to [mixture of experts](MoE-Mixture-of-Experts)
 - Attention: full, sliding window, liner, flash
