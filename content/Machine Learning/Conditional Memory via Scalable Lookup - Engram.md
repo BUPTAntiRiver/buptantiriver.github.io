@@ -73,7 +73,9 @@ The retrieved memory is then modulated by these independent gates applied to the
 ## System Efficiency: Decoupling Computed and Memory
 
 Unlike MoE, which relies on runtime hidden states for dynamic routing, Engram's retrieval indices depend solely on the input token sequence. So it can have specialized optimization during training and inference.
+
 ![[System implementation of Engram.png]]
+
 During _training_, to accommodate large-scale embedding tables, we employ _standard model parallelism_ by sharding the tables across available GPUs. An All-to-All communication primitive is used to gather active rows in the forward pass and dispatch gradients in the backward pass.
 
 During _inference_, this deterministic nature enables a prefetch-and-overlap strategy. Since memory indices are known prior to the forward pass, the system can asynchronously retrieve embeddings from abundant host memory via PCIe. So we should place Engram layer carefully, so that we can take the layers before it as a buffer of **latency masking**, but from experiments, it shows that the **earlier** we have Engram intervention to offload local pattern reconstructions, the better modeling performance we can have. It becomes a trade-off, therefore, the optimal placement must **simultaneously satisfy both modeling and system latency constraints.** In short, if we put Engram early, we don't have enough latency masking, so that GPU may stall, but has better performance due to early reconstruction of local patterns, and if we put Engram deeper, it's just the opposite.
@@ -109,7 +111,9 @@ Intuitively:
 - $\rho<1$ reduces the number of routed experts and reallocates the freed parameters to Engram embedding slots.
 
 Then we get experiment results (left one):
+
 ![[Sparsity allocation and Engram scaling.png]]
+
 it's a U-like curve (I really doubt that!), which confirms the two modules are structurally complementary to each other:
 
 - **MoE-dominated:** forcing into inefficient reconstruct.
