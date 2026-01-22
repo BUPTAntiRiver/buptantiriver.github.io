@@ -71,3 +71,54 @@ $$
 The retrieved memory is then modulated by these independent gates applied to the shared value vector: $\mathbf{u}^{(m)}_{t}=\alpha_{t}^{(m)}\cdot(\mathbf{W}_{V}\mathbf{e}_{t})$. Unless otherwise stated, all experiments utilize this integration with [[Manifold-Constrained Hyper-Connections]] ($M=4$).
 
 ## System Efficiency: Decoupling Computed and Memory
+
+Unlike MoE, which relies on runtime hidden states for dynamic routing, Engram's retrieval indices depend solely on the input token sequence. So it can have specialized optimization during training and inference.
+![[System implementation of Engram.png]]
+During _training_, to accommodate large-scale embedding tables, we employ _standard model parallelism_ by sharding the tables across available GPUs. An All-to-All communication primitive is used to gather active rows in the forward pass and dispatch gradients in the backward pass.
+
+During _inference_, this deterministic nature enables a prefetch-and-overlap strategy. Since memory indices are known prior to the forward pass, the system can asynchronously retrieve embeddings from abundant host memory via PCIe. So we should place Engram layer carefully, so that we can take the layers before it as a buffer of **latency masking**, but from experiments, it shows that the **earlier** we have Engram intervention to offload local pattern reconstructions, the better modeling performance we can have. It becomes a trade-off, therefore, the optimal placement must **simultaneously satisfy both modeling and system latency constraints.** In short, if we put Engram early, we don't have enough latency masking, so that GPU may stall, but has better performance due to early reconstruction of local patterns, and if we put Engram deeper, it's just the opposite.
+
+DeepSeek guys are insane, they considered that natural language $N$-grams inherently follow a Zipfian distribution, where a small fraction of patterns accounts for the vast majority of memory access. This statistical property motivates a Multi-Level Cache Hierarchy.
+
+# Scaling Laws and Sparsity Allocation
+
+Two key questions drive the research:
+
+1. **Allocation under Finite Constraints.** When total parameters and training compute are fixed (Iso-parameters and Iso-FLOPs), how should we split the sparse capacity between MoE experts and Engram embeddings?
+2. **Infinite Memory Regime.** Considering the non-scaling $\mathcal{O}(1)$ overhead of Engram, if the memory budget is relaxed or scaled aggressively, what scaling behavior does Engram exhibit by itself?
+
+## Optimal Allocation Ratio Between MoE and Engram
+
+**Compute-match Formulation.** We analyze the trade-off using three parameter metrics:
+
+- $P_{\text{tot}}$: total trainable parameters, excluding vocabulary embedding and LM head.
+- $P_{\text{act}}$: activated parameters per token. This quantity determines the training cost (FLOPs).
+- $P_{\text{sparse}}\triangleq P_{\text{tot}}-P_{\text{act}}$: the _inactive_ parameters, which represent the "free" parameter budget available for scaling model size without incurring computational cost (e.g. unselected experts or unretrieved embeddings).
+
+We keep $P_{\text{tot}}$ and $P_{\text{act}}$ fixed within each FLOPs budget, so that the model have same number of parameters and same per-token FLOPs. For MoE, $P_{\text{act}}$ is determined by the top-$k$ selected experts. For Engram, only a constant number of slots are retrieved per token, so scaling the number of embedding slots increases $P_{\text{tot}}$ without increasing per-token FLOPs.
+
+**Allocation ratio.** We define the allocation ratio $\rho\in[0,1]$ as the fraction of the inactive-parameter budget assigned to MoE expert capacity:
+
+$$
+P_{\text{MoE}}^{(\text{sparse})}=\rho P_{\text{sparse}},\quad P_{\text{Engram}}=(1-\rho)P_{\text{sparse}}.
+$$
+
+Intuitively:
+
+- $\rho=1$ corresponds to a pure MoE model.
+- $\rho<1$ reduces the number of routed experts and reallocates the freed parameters to Engram embedding slots.
+
+Then we get experiment results (left one):
+![[Sparsity allocation and Engram scaling.png]]
+it's a U-like curve (I really doubt that!), which confirms the two modules are structurally complementary to each other:
+
+- **MoE-dominated:** forcing into inefficient reconstruct.
+- **Engram-dominated:** model loses conditional computation capacity, hurting tasks that require dynamic context dependent reasoning.
+
+## Engram under Infinite Memory Regime
+
+Now we fix a MoE backbone and attach an Engram table to it. We sweep the number of slots $M$ to get scaling results, comparing to OverEncoding as baseline.
+
+The result shows in the right part of above figure, which demonstrates that scaling the number of memory slots yields a clear and consistent improvement of validation loss. The curve follows a strict **power law** (linear in log-space).
+
+# Large Scale Pre-training
