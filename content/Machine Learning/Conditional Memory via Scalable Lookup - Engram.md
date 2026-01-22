@@ -122,3 +122,35 @@ Now we fix a MoE backbone and attach an Engram table to it. We sweep the number 
 The result shows in the right part of above figure, which demonstrates that scaling the number of memory slots yields a clear and consistent improvement of validation loss. The curve follows a strict **power law** (linear in log-space).
 
 # Large Scale Pre-training
+
+In this part, they scale up the model. From the experiments result, we can see that Engram really works, increases performance in all aspects comparing to pure MoE.
+
+Also, they trained a model with only more Engram size but same MoE size on the same budget, the result shows that the bigger model has lower loss and better performance on many of the tasks, which suggests that the expanded memory capacity has not yet fully saturated within the current token budget.
+
+# Long Context Training
+
+In this part, they want to research how does Engram affects model's performance on long context tasks.
+
+Results shows, the Engram model with same loss as MoE performs better on long context benchmarks. And which same budget, Engram is no doubt even better.
+
+# Analysis
+
+## How does Engram work?
+
+Engram is actually adding more structural handling to token directly. If we think of this carefully, we find that it has been a long time since last time researches puts effort in making the model makes more sense (I know there are works do such kind of thing, but mainly focuses on scale stuffs). This is just like CNN, with convolution, it can build information from a region, and RNN, can build information from time sequence, and Transformer which utilizes Attention, which can grab information from long time ago easily, so even better context. Other models like diffusion models, flow models, they all have their philosophy.
+
+And Engram is kind of making the model closer to human brain. Brain has many districts in it, each responsible for different jobs, but nowadays model seems to just have a block and keep staking it, making every thing a "mess". Engram is kind of extracting different parts of the brain, so it achieves better performance.
+
+In their experiments, they show that with Engram the understanding to tokens at layer 5 is already similar to pure MoE at layer 12. So it does help the model to reconstruct information better. Check the paper to know about their methodology.
+
+## Ablations
+
+Remember we have done many other augmentations to Engram like multi-branching, context-aware gating, tokenier compression. They do ablations and find any of them is very important. Remove any one can cause great regression in validation loss. However the lightweight depthwise convolution does not matter a lot.
+
+## System Efficiency
+
+Very good. A little overhead.
+
+# Conclusion
+
+Introduces **Conditional Memory** Engram, as an additional sparsity axis aiming to resolve the inefficiency of simulating knowledge retrieval through dynamic computation. It effectively "deepen" the network by relieving early layers from static reconstruction tasks, thereby freeing up attention capacity to focus on global context and complex reasoning.
