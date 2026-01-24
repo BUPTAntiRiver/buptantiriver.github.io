@@ -56,7 +56,7 @@ So we reduce the cost of a value model, only use reward model to calculate the a
 
 ### Breaking baseline rule
 
-GRPO calculates advantage by subtracting mean of rewards and dividing it with standard deviation, but the baseline rule of reinforcement learning says that what we can do is to subtract any state-dependent term from out rewards. So this breaks such rule, and the key problem is dividing by standard deviation. With low deviation we will have much greater reward, so model will learn more from it. And usually very easy (all correct) and very hard (all wrong) questions can achieve low deviation, such design of advantage leads to **bias towards super easy and hard questions.**
+GRPO calculates advantage by subtracting mean of rewards and dividing it with standard deviation, but the baseline rule of reinforcement learning says that what we can do is to subtract any _state-dependent only_ term from out rewards. So this breaks such rule, and the key problem is dividing by standard deviation. With low deviation we will have much greater reward, so model will learn more from it. And usually very easy (all correct) and very hard (all wrong) questions can achieve low deviation, such design of advantage leads to **bias towards super easy and hard questions.**
 
 ### Length bias
 
