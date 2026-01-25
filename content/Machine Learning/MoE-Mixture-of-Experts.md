@@ -4,21 +4,16 @@ reference: [Mixture of Experts Explained](https://huggingface.co/blog/moe)
 
 MoE is in the context of **Transformer** models, and a MoE has 2 main elements:
 
-## Sparse MoE layers
-
-Which replace FFN (Feed Forward Network) layers, MoE layers has a certain number of "**expert**s", each expert is a neural network. In practice they can be FFNs or more complex networks like MoE itself, which leads to hierarchical MoEs.
-
-## Gate Network or Router
-
-It determines which tokens are sent to which expert(s).
+- **Sparse MoE layers**: which replace FFN (Feed Forward Network) layers, MoE layers has a certain number of "**expert**s", each expert is a neural network. In practice they can be FFNs or more complex networks like MoE itself, which leads to hierarchical MoEs.
+- **Gate Network or Router**: which determines which tokens are sent to which expert(s).
 
 ## What is **sparsity**?
 
-Sparsity uses the idea of conditional computing. In dense model all parameters are used for all the inputs, while sparsity allows MoE to only run some part of the whole system.
+Sparsity uses the idea of **conditional computing**. In dense model all parameters are used for all the inputs, while sparsity allows MoE to only run some part of the whole system. So we can increase model size with same compute.
 
 ### Challenges
 
-But this introduces some challenges, for example, batched data are widely used, given we have a batch of inputs with 10 tokens, but only 5 of them were sent to one expert, the others are sent to different experts, leading to **uneven batch sizes and underutilization**.
+But this introduces some challenges, for example, batched data are widely used, given we have a batch of inputs with 10k tokens, but 9k of them were sent to one expert, the others are sent to different experts, leading to **uneven batch sizes and underutilization**.
 
 ### Solution
 
@@ -39,11 +34,11 @@ There are some other techniques, like Shazeer's Noisy Top-k Gating.
 
 #### Load balancing tokens for MoEs
 
-In normal MoE training, the gate network converges to mostly the same few experts. This self-reinforces as favored experts are trained faster and hence selected more. To mitigate this, an **auxiliary loss** is added to encourage giving all experts equal importance.
+In normal MoE training, the gate network converges to mostly the same few experts. This self-reinforces as favored experts are trained faster and hence selected more. To mitigate this, an **auxiliary loss** is added to encourage giving all experts equal importance. Check the [[DeepSeekMoE|DeepSeek]] papers to see their design.
 
 # Why?
 
-MoE has **better compute efficiency**, which means you can **scale up** model size or dataset size with the same compute budget as a dense model.
+MoE has **better compute efficiency**, which means you can **scale up** model size or dataset size with the _same compute budget_ as a dense model.
 Although MoEs provides efficient pretraining and faster inference compared to dense models, they also come with challenges:
 
 - **Training**: struggled to generalize during fine-tuning, leading to overfitting.
@@ -83,6 +78,9 @@ Instruction Tuning also appears to benefit MoEs more than dense models.
 MoE used to be hard to train, but now many methods have been developed to speed up. That makes MoE goes brrrrrrrrrrrrrrrrrr.
 
 ### Parallelism
+
+Check this note for some common distributed training methods nowadays: [[Distributed Training - TinyML]].
+We can assign each expert a device for parallel training.
 
 ### Serving Techniques
 
