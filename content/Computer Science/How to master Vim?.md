@@ -1,8 +1,9 @@
-Resources:
+First install vim, then open your terminal and run:
 
-- Use Vim Like a Pro https://leanpub.com/VimLikeAPro I think should we should go to zlib to get this
-- Vim Cheat Sheet https://vim.rtorr.com/
+```bash
+vimtutor
+```
 
-# Basics
+Finish the tutorial, great! Now you have enough knowledge to use vim well in IDE with extension. But I am sure that is not what you want, right? You want to be a PRO, who uses only text editors and gets rid of modern powerful IDE.
 
-**Command** in vim consists of four parts: registers, repeats, operation, movement.
+Then I think we should dive into buffers or maybe try lazy vim to bring more power.
