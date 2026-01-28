@@ -16,4 +16,16 @@ The more important difference is that the number of memory caches, CPU has much 
 
 GPU uses SIMT architecture,which means _single instruction multiple threads_. Multiple threads make up a **thread block**, multiple thread blocks make up a **grid**. CPU invokes GPU at **grid** level.
 
-Then the thread blocks are assigned to Streaming Multiprocessors to do the computation. In side the thread blocks, we have another group level, which is **warp**, usually consists of 32 threads, the threads in the same warp all perform the same operations at the same time on different data, it is kind like SIMD, which stands for single instruction multiple data, but the core design of CUDA is totally different from SIMD, and it is more flexible.
+Then the thread blocks are assigned to Streaming Multiprocessors (SM) to do the computation. In side the thread blocks, we have another group level, which is **warp**, usually consists of 32 threads, the threads in the same warp all perform the same operations at the same time on different data, it is kind like SIMD, which stands for single instruction multiple data, but the core design of CUDA is totally different from SIMD, and it is more flexible.
+
+The total number of threads in each thread block is specified by the host code when a kernel is called. For a given grid of threads, the _number of threads in a block_ is available in a built-in variable named `blockDim`.
+
+The `blockDim` variable is a struct with three unsigned integer fields ($x,y$ and $z$) that help user to organize the threads into a one-, two- or three-dimensional array. For one-dimensional array, we only use `blockDim.x` which indicates the total number of threads in each block, it is recommended that make each dimension of a thread block a multiple of 32 because each _warp_ has 32 threads.
+
+## Declaration of Host/Device Function
+
+| keyword      | call on | execute on | executed by                |
+| ------------ | ------- | ---------- | -------------------------- |
+| `__global__` | host    | device     | new grid of device threads |
+| `__device__` | device  | device     | caller device thread       |
+| `__host__`   | host    | host       | caller host thread         |
