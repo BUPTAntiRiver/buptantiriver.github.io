@@ -14,6 +14,6 @@ The more important difference is that the number of memory caches, CPU has much 
 
 # More About GPU
 
-GPU uses SIMT architecture,which means _single instruction multiple threads_. Multiple threads make up a **thread block**, multiple thread blocks make up a **grid**. CPU invokes GPU at gird level.
+GPU uses SIMT architecture,which means _single instruction multiple threads_. Multiple threads make up a **thread block**, multiple thread blocks make up a **grid**. CPU invokes GPU at **grid** level.
 
 Then the thread blocks are assigned to Streaming Multiprocessors to do the computation. In side the thread blocks, we have another group level, which is **warp**, usually consists of 32 threads, the threads in the same warp all perform the same operations at the same time on different data, it is kind like SIMD, which stands for single instruction multiple data, but the core design of CUDA is totally different from SIMD, and it is more flexible.
