@@ -33,8 +33,11 @@ We want to compute with **fewer HBM IO** and **without storing large intermediat
 ### Tiling and Recomputation
 
 _Tiling_
+
 Split the input $Q,K,V$ into blocks and load them from slow HBM to fast SRAM. In order to ensure softmax stability, we need to compute $m(x),l(x)$ for all the blocks to do so, this also avoids softmax over the whole large matrix which is very slow.
+
 _Recomputation_
+
 $S=QK^T$ and $P=\text{softmax}\left(  \frac{S}{\sqrt{ d }}  \right)$ are needed to compute gradients of $Q,K,V$, but we can recompute them with output $O$ and softmax normalization statistics $m,l$ in SRAM.
 
 ### Block-Sparse FlashAttention
@@ -58,6 +61,7 @@ See above. [[#Introduction]]
 ### Algorithm
 
 To reduce NON-matmul operations, we can skip rescale of output after each step, but only **rescale the final** output $\hat{O}^{(\text{last})}$ by $(l^{\text{(last)}})^{-1}$ to get the right output.
+
 We also don't have to save both $m$ and $l$ to recompute for backward, instead we only need to save **logsumexp** $L=m+\log(l)$.
 
 ### Parallelization
@@ -67,7 +71,9 @@ Additionally parallelize over sequence length dimension.
 ### Partitioning
 
 In forward pass, originally we split over $K,V$, now we split $Q$ across warps, while keeping $K,V$ accessible to all warps, which reduces communication between warps and shared memory IO.
+
 In backward pass, we also try to **avoid K-split**, but still requires some synchronization.
+
 Block size can also be tuned to achieve better performance.
 
 # FlashAttention-3
@@ -92,7 +98,9 @@ From top to bottom the capacity grows smaller but bandwidth becomes higher.
 ### Producer-Consumer
 
 Producer for data loading and consumer for computation. WGMMA for matmul and TMA for loads/stores.
+
 And in computation, we can further improve scheduling with **pingpong scheduling**.
+
 Matmul throughput is much bigger than non-matmul operations. Since exponential is performed on a separate hardware unit, we want to schedule it when Tensor Core is performing matmul. When one warpgroup is doing the next matmul, the other warpgroup can do softmax. So that **no unit is idle**.
 
 ### Intra-warpgroup overlapping

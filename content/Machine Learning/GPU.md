@@ -29,3 +29,9 @@ The `blockDim` variable is a struct with three unsigned integer fields ($x,y$ an
 | `__global__` | host    | device     | new grid of device threads |
 | `__device__` | device  | device     | caller device thread       |
 | `__host__`   | host    | host       | caller host thread         |
+
+## Synchronization
+
+In CUDA, each `syncthreads()` much be executed by all threads in a block, and are different synchronization points.
+
+For example, `syncthreads()` in different branches in if-then-else statements are different so either all threads in the block should execute the then path or execute the else path. Or there will be undefined executions, like deadlock.
