@@ -27,4 +27,8 @@ Implicitly defined by the library, which is more adaptable but has limits on opt
 # How to update variable?
 
 So far we only talked about how to compute the gradients, but how to update them?
-That is what the optimizer do, it will update all the parameters in your model.
+
+That is what the optimizer do, it will update all the parameters in your model. Based on the gradients. But how are the gradients computed?
+
+## Backward
+
